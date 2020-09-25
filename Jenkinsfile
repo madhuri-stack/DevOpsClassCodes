@@ -24,10 +24,10 @@ pipeline{
                 }
             }
             stage('UnitTest'){
-                agent {label 'win_slave'}
+                agent any
                 steps{
                     git 'https://github.com/devops-trainer/DevOpsClassCodes.git'
-                    bat 'mvn test'
+                    sh 'mvn test'
                 }
                 post{
                     always{
