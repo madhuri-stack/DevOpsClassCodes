@@ -53,17 +53,19 @@ pipeline{
                     sh 'mvn package'
                 }
             }
-    
- environment { 
+        stage('Deploy'){
+            
+           environment { 
 
-        registry = "devopslearner45/myrepo" 
+          registry = "devopslearner45/myrepo" 
 
-        registryCredential = 'devopslearner45' 
+          registryCredential = 'devopslearner45' 
 
         dockerImage = '' 
 
-    }
-
+    
+           }    
+   }
     agent none 
     
     stages { 
