@@ -5,7 +5,7 @@
 
         registry = "devopslearner45/myrepo" 
 
-        registryCredential = 'dockerhub_id' 
+        registryCredential = 'devopslearner45' 
 
         dockerImage = '' 
 
@@ -19,7 +19,7 @@
 
             steps { 
 
-                git 'https://github.com/YourGithubAccount/YourGithubRepository.git' 
+                git 'https://github.com/madhuri-stack/DevOpsClassCodes.git' 
 
             }
 
