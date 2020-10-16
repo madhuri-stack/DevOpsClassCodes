@@ -53,9 +53,8 @@ pipeline{
                     sh 'mvn package'
                 }
             }
-    }
-
-environment { 
+    
+ environment { 
 
         registry = "devopslearner45/myrepo" 
 
@@ -118,5 +117,5 @@ environment {
 
         } 
 
-
+    }
 }
