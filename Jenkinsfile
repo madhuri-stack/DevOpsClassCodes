@@ -53,8 +53,7 @@ pipeline{
                     sh 'mvn package'
                 }
             }
-        stage('Deploy'){
-            agent any
+    }
            environment { 
 
           registry = "devopslearner45/myrepo" 
@@ -65,9 +64,10 @@ pipeline{
 
     
            }
-            
+     agent none
+    stages{
             stage('Building our image') { 
-agent any
+
             steps { 
 
                 script { 
@@ -81,7 +81,6 @@ agent any
         }
 
         stage('Deploy our image') { 
-agent any
             steps { 
 
                 script { 
@@ -108,7 +107,7 @@ agent any
 
     }
 }
-}
+
    /*}
         
     agent none 
