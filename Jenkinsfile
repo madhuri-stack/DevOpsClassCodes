@@ -1,134 +1,75 @@
 pipeline{
     tools{
         jdk 'myjava'
-        maven 'mymaven'
+        maven 'mymaven1'
     }
-    
-    agent none
-    stages{
-            stage('Compile'){
-                agent any
-                steps{
-                    sh 'mvn compile'
-                }
-            }
-            stage('CodeReview'){
-                agent any
-                steps{
-                    sh 'mvn pmd:pmd'
-                }
-                post{
-                    always{
-                        pmd pattern: 'target/pmd.xml'
-                    }
-                }
-            }
-            stage('UnitTest'){
-                agent any
-                steps{
-                    git 'https://github.com/devops-trainer/DevOpsClassCodes.git'
-                    sh 'mvn test'
-                }
-                post{
-                    always{
-                        junit 'target/surefire-reports/*.xml'
-                    }
-                }
-                
-            }
-            stage('MetricCheck'){
-                agent any
-                steps{
-                    sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
-                }
-                post{
-                    always{
-                        cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml'
-                    }
-                }
-            }
-            stage('Package'){
-                agent any
-                steps{
-                    sh 'mvn package'
-                }
-            }
-    }
-           environment { 
+    environment { 
 
-          registry = "devopslearner45/myrepo" 
+        registry = "devopslearner45/myrepo" 
 
-          registryCredential = 'devopslearner45' 
+        registryCredential = 'devopslearner45' 
 
         dockerImage = '' 
 
-    
-           }
-     agent none
-    stages{
-            stage('Building our image') { 
-
-            steps { 
-
-                script { 
-
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
-
-                }
-
-            } 
-
-        }
-
-        stage('Deploy our image') { 
-            steps { 
-
-                script { 
-
-                    docker.withRegistry( '', registryCredential ) { 
-                        dockerImage.push() 
-                    }
-
-                } 
-
-            }
-
-        } 
-
-        stage('Cleaning up') { 
-
-            steps { 
-
-                sh "docker rmi $registry:$BUILD_NUMBER" 
-
-            }
-
-        } 
-
     }
-}
-
-   /*}
-        
-    agent none 
+    agent none
+    stages{
+        stage('Checkout'){
+            agent any
+            steps{
+                git 'https://github.com/devops-trainer/DevOpsClassCodes.git'
+            }
+        }
+        stage('Compile'){
+            agent any
+            steps{
+                sh 'mvn compile'
+            }
+        }
+        stage('CodeReview'){
+            agent any
+            steps{
+                sh 'mvn pmd:pmd'
+            }
+        }
+        stage('UnitTest'){
+            agent any
+            steps{
+                //git 'https://github.com/devops-trainer/DevOpsClassCodes.git'
+                sh 'mvn test'
+            }
+        }
+        stage('MetricCheck'){
+            agent any
+            steps{
+                sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'
+            }
+        }
+        stage('Package'){
+            agent any
+            steps{
+                sh 'mvn package'
+            }
+        }
     
-    stages { 
-        stage('Cloning our Git') { 
 
+
+        stage('Cloning our Git') { 
+agent any
             steps { 
 
-                git 'https://github.com/madhuri-stack/DevOpsClassCodes/edit/master/JenkinsFile1' 
+                git 'https://github.com/mohitkhokhar172/DevOpsClassCodes.git' 
 
             }
 
         } 
 
         stage('Building our image') { 
-
+agent any
             steps { 
 
                 script { 
-
+                    sh 'whoami'
                     dockerImage = docker.build registry + ":$BUILD_NUMBER" 
 
                 }
@@ -138,7 +79,7 @@ pipeline{
         }
 
         stage('Deploy our image') { 
-
+agent any
             steps { 
 
                 script { 
@@ -154,7 +95,7 @@ pipeline{
         } 
 
         stage('Cleaning up') { 
-
+agent any
             steps { 
 
                 sh "docker rmi $registry:$BUILD_NUMBER" 
@@ -164,6 +105,7 @@ pipeline{
         } 
 
     }
+
+
+
 }
-}
-*/
