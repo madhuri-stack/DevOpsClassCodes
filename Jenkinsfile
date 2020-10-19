@@ -54,7 +54,7 @@ pipeline{
                 }
             }
         stage('Deploy'){
-            
+            agent any
            environment { 
 
           registry = "devopslearner45/myrepo" 
@@ -67,7 +67,7 @@ pipeline{
            }
             
             stage('Building our image') { 
-
+agent any
             steps { 
 
                 script { 
@@ -81,7 +81,7 @@ pipeline{
         }
 
         stage('Deploy our image') { 
-
+agent any
             steps { 
 
                 script { 
