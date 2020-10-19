@@ -51,9 +51,6 @@ pipeline{
                 sh 'mvn package'
             }
         }
-    
-
-
         stage('Cloning our Git') { 
 agent any
             steps { 
